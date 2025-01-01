@@ -1,0 +1,54 @@
+- 
+	var slides = [
+		{
+			name: 'slide-1',
+			content: "and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+			bg: "https://c1.staticflickr.com/9/8479/8218513227_ae0c46ee21_b.jpg",
+			id: 0,
+			active: true
+		},
+		{
+			name: 'slide-2',
+			content: "and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+			bg: "https://a.desktopprassets.com/wallpapers/af913e4f463d31c7f46f224d61301e1dcdc94f77/preview_zhuoku166.jpg",
+			id: 1,
+			active: false
+		},
+		{
+			name: 'slide-3',
+			content: "and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+			bg: "https://www.look.com.ua/large/201209/34486.jpg",
+			id: 2,
+			active: false
+		},
+		{
+			name: 'slide-4',
+			content: "and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+			bg: "https://novoboi.ru/download_img.php?dimg=6692&raz=800x480",
+			id: 2,
+			active: false
+		},
+		{
+			name: 'slide-5',
+			content: "and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+			bg: "https://img-fotki.yandex.ru/get/4415/94919113.42/0_73e71_d8d19d37_XL",
+			id: 2,
+			active: false
+		},
+		{
+			name: 'slide-5',
+			content: "and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+			bg: "http://www.kartinkijane.ru/download.php?file=201304/1680x1050/kartinkijane.ru-13643.jpg",
+			id: 2,
+			active: false
+		}
+	];
+.slider-sw
+	- for (var i = 0; i < slides.length; i++)
+			div(
+				class=`slider-sw__slide` 
+				style=`background-image: url(${slides[i].bg}); background-position: center center`)
+				h2 #{slides[i].name}
+				p #{slides[i].content}
+				button click
+				
