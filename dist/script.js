@@ -141,4 +141,7 @@ class SWslider {
   }}
 
 
-new SWslider('.slider-sw', '.slider-sw__slide', 1500);
+// new SWslider('.slider-sw', '.slider-sw__slide', 1500);
+// new SWslider('.slider-sw', '.slider-sw__slide', 1500,'.slider-sw__prevIcon','.slider-sw__nextIcon');
+new SWslider('.slider-sw', '.slider-sw__slide', 1500,'前','後');
+
