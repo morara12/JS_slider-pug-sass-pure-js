@@ -11,6 +11,7 @@ class SWslider {
 		// document.querySelector_JavaScriptから任意のHTML要素を検出・取得することができるメソッド
 		this.slides = Array.from(document.querySelectorAll(`${slideName}`));
 		// Array.from_文字列や配列風オブジェクトから新しい配列を生成する
+		// querySelectorAll⇒全部取ってくるので複数になりえる
 		this.delay = delay;
 		// 引数の delay をインスタンスのプロパティに設定
 		// 下2つも同様
@@ -27,6 +28,7 @@ class SWslider {
 		this.direction = -1;
 		
 		this.slideChange = this.getSlideIndexes();
+		// this.getSlideIndexes();引数はないがgetSlideIndexesという名前を付けたひとまとまりの処理にしたい
 		this.currentIndexes = this.slideChange(this.direction);
 		this.setClasses();
 		this.createNavigation();
@@ -56,12 +58,16 @@ class SWslider {
 	}
 	// document.createElement HTML 要素を動的に生成
 	// ===完全一致
-	// addEventListene何かをしたときに関数が実行されること
+	// addEventListener何かをしたときに関数が実行されること
 	// span.className = `slider-sw__nav ${v.name}`;
 	// slider-sw__nav ${v.name}`で一つの文　テンプレートリテラルを使って文字を弄れる
 	// appendChild() は Node インターフェイスのメソッドで、指定された親ノード（要素）の子ノードリストの末尾にノードを追加
 	prevAction () {
 		this.setSlides('decrement');
+		//⇒ setSlides ('decrement') {
+		// 'decrement' === 'increment' ? this.direction = 1 : this.direction = -1;
+		// 	this.currentIndexes = this.slideChange(this.direction);
+		// }
 		this.setClasses();
 		this.setActivePagination();
 	}
@@ -85,6 +91,7 @@ class SWslider {
 		});
 		this.container.appendChild(pagination);
 	}
+	
 	// (1)document.createElement HTML 要素を動的に生成
 	// (2)for文_指定した回数だけ繰り返し処理を行なう
 	// (3) 初期値 : let i = 0;
@@ -94,7 +101,7 @@ class SWslider {
 	// console.log(data.length);
 	// >> 3
 	// 配列の最後のインデックスに +1 した値を返す（つまり、2に1を足したので3)
-	// (4)i++後置インクリメント演算子⇒0の箇所を指している
+	// (4)i++ 1個ずつ追加
 	// (5)三項演算子（? と :）ifのかわりに使う
 	// this.currentSlide === i ? 'slider-sw__pagination-item--active' : '
 	// this.currentSlide === i 
@@ -106,19 +113,21 @@ class SWslider {
 	// Array.prototype.push()配列の末尾(後ろ)に新しい要素を追加
 	// ⇒つまり、paginationItemsに、spanを追加
 	// appendChild() は Node インターフェイスのメソッドで、指定された親ノード（要素）の子ノードリストの末尾にノードを追加
-	
+
 	setActivePagination () {
 		this.paginationItems.forEach(v => {
 			v.classList.remove('slider-sw__pagination-item--active');
 		});
 		this.paginationItems[this.currentIndexes[1]].classList.add('slider-sw__pagination-item--active');
 	}
-
-	
+	// currentIndexe…constructorの関数から引用
+	// classList…setPaginationの関数からひっぱってきている
+	// this.currentIndexes = this.slideChange(this.direction);
+	// this.slideChange = this.getSlideIndexes();
 	changeActivePaginationItem (e) {
 		
 		this.currentSlide = +e.target.getAttribute('data-pagination-item-id');
-		
+		// +演算子⇒オペランドの前に置かれ、そのオペランドを評価し、それが数値以外の場合は数値に変換
 		let steps = this.currentIndexes[1] - this.currentSlide;
 		
 		let stopID1 = null;
@@ -135,11 +144,19 @@ class SWslider {
 		this.setClasses();
 		this.setActivePagination();
 	}
+	// i--変数の値を1だけ減らす
 	getSlideIndexes () {
+		// ()引数のない関数
 		let arr = [...this.slides];
 		// ...スプレッド構文は、3つのドット「...」を使って、配列やオブジェクトの要素を展開する記法
+		// this.slides = Array.from(document.querySelectorAll(`${slideName＝"slider-sw__slide"}`));
 		let indexes = arr.map( (v, i) =>{ return i });
+		// Array.prototype.map()⇒は Array インスタンスのメソッドで、与えられた関数を配列のすべての要素に対して呼び出し、その結果からなる新しい配列を生成
+		// return 文は関数の実行を終了して、関数の呼び出し元に返す値を指定
+		// V = arrの要素
+		// i: 配列 arr の各要素のインデックス（位置）⇒html class=class=`slider-sw__slide`、slides[i]
 		let len = indexes.length - 1;
+		// 配列の数 -1
 		return function (step) {
 			indexes = indexes.map( (v) => {
 				v += step;
@@ -152,18 +169,30 @@ class SWslider {
 			});
 			return indexes;
 		}
+		// if (条件式1)
+		// １がtruneのとき
+		// else if 条件1がfalse、条件2があてはまるとき
+		// indexesの要素の数？のこといってる
 	}
 	setSlides (dir) {
 		dir === 'increment' ? this.direction = 1 : this.direction = -1;
+		// dir === 'increment'trueか判断ししている
+		// dir⇒decrement
+		// 'increment'=== 'increment'であるかないかの式
 		this.currentIndexes = this.slideChange(this.direction);
 	}
 	setClasses (p, c, n) {
+		// p, c, nは今回関係ない書き方
 		this.slides.forEach( v => {
+			//※Vの中身this.slides = Array.from(document.querySelectorAll(`${HTMLのclss=slider-sw__slide}`));
 			v.classList.remove('slider-sw__prev');
+			// Element.classList＝Element（HTML/XML要素を内包したオブジェクト）.classList(特定の要素のクラス名を追加したり、削除したり、参照したりすることが出来る便利なプロパティ).romove(削除)(html=classのslider-sw__prev)
 			v.classList.remove('slider-sw__next');
 			v.classList.remove('slider-sw__current');
 		});
 		this.slides[this.currentIndexes[0]].classList.add('slider-sw__prev');
+		// this.currentIndexes = this.slideChange(this.direction)
+		// this.slideChange = this.getSlideIndexes();
 		this.slides[this.currentIndexes[2]].classList.add('slider-sw__next');
 		this.slides[this.currentIndexes[1]].classList.add('slider-sw__current');
 		
@@ -175,15 +204,21 @@ class SWslider {
 			this.setActivePagination();
 		}, this.delay);
 	}
+	// setInterval…一定時間後に一度だけ特定の処理をおこなう
+	// Webを見ていて、スライドショーなど、一定時間ごとに画像や文字が切り替わったりする動的な動きを見たことがあるのではないでしょうか。
+　　// これは、JavaScriptのタイマー処理という処理で実装することができます。
 	setHover () {
 		this.container.addEventListener('mouseover', () => {
 			clearInterval(this.autoplayStopID);
 		});
+		// this.container = document.querySelector(`${containerName⇒'.slider-sw'}`);
+		// addEventListener⇒addEventListener何かをしたときに関数が実行されること
+		// clearInterval関数…setInterval関数によって開始された繰り返し処理をキャンセルするために使用される
 		this.container.addEventListener('mouseout', () => {
 			this.setAutoPlay();
 		});
 	}
+	
 }
 
 new SWslider('.slider-sw', '.slider-sw__slide', 1500,'前','後');
-	
