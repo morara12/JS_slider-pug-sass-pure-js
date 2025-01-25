@@ -53,7 +53,7 @@ class SWslider {
 					this.nextAction();
 				});
 			}	
-			// this.container.appendChild(span)
+			this.container.appendChild(span)
 		});
 	}
 	// document.createElement HTML 要素を動的に生成
@@ -91,7 +91,8 @@ class SWslider {
 		});
 		this.container.appendChild(pagination);
 	}
-	
+	// pagination.addEventListener('click', (e)⇒(e)の中身はpagination
+	// let span = document.createElement('span');JS上に作成
 	// (1)document.createElement HTML 要素を動的に生成
 	// (2)for文_指定した回数だけ繰り返し処理を行なう
 	// (3) 初期値 : let i = 0;
@@ -125,11 +126,16 @@ class SWslider {
 	// this.currentIndexes = this.slideChange(this.direction);
 	// this.slideChange = this.getSlideIndexes();
 	changeActivePaginationItem (e) {
-		
+		// 〇（ページネーション）をクリックしたときにアクティブにするもの
 		this.currentSlide = +e.target.getAttribute('data-pagination-item-id');
 		// +演算子⇒オペランドの前に置かれ、そのオペランドを評価し、それが数値以外の場合は数値に変換
+		// +e.target　イベント取得しているtargetの対象が要素そのもの
+		// this.currentSlideは数値が入る<span class="slider-sw__pagination-item" data-pagination-item-id="6"></span>
+		// getAttribute
 		let steps = this.currentIndexes[1] - this.currentSlide;
-		
+		// this.currentIndexes = this.slideChange(this.direction)
+		// this.slideChange = this.getSlideIndexes();
+		// [0]の箇所について：this.slideChange = this.getSlideIndexes();
 		let stopID1 = null;
 		if(steps < 0){
 			for(let i = steps; i < 0; i++){
@@ -140,6 +146,7 @@ class SWslider {
 				this.currentIndexes = this.slideChange(-1);
 			}
 		}
+		// 〇（ページネーション）がどこの位置か管理している
 		this.setSlides();
 		this.setClasses();
 		this.setActivePagination();
@@ -193,6 +200,7 @@ class SWslider {
 		this.slides[this.currentIndexes[0]].classList.add('slider-sw__prev');
 		// this.currentIndexes = this.slideChange(this.direction)
 		// this.slideChange = this.getSlideIndexes();
+		// [0]の箇所について：this.slideChange = this.getSlideIndexes();
 		this.slides[this.currentIndexes[2]].classList.add('slider-sw__next');
 		this.slides[this.currentIndexes[1]].classList.add('slider-sw__current');
 		
@@ -204,9 +212,10 @@ class SWslider {
 			this.setActivePagination();
 		}, this.delay);
 	}
-	// setInterval…一定時間後に一度だけ特定の処理をおこなう
+	// setInterval…一定時間ごとに特定の処理を繰り返す
 	// Webを見ていて、スライドショーなど、一定時間ごとに画像や文字が切り替わったりする動的な動きを見たことがあるのではないでしょうか。
 　　// これは、JavaScriptのタイマー処理という処理で実装することができます。
+　　// 1500m秒ごとに繰り返す 100で1秒⇒つまり、1.5秒
 	setHover () {
 		this.container.addEventListener('mouseover', () => {
 			clearInterval(this.autoplayStopID);
